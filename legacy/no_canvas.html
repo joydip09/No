@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Are you gay?</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        #myCanvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="600" height="400"></canvas>
+
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set initial button positions
+        let yesButton = {x: 150, y: 250, width: 100, height: 50, label: "Yes"};
+        let noButton = {x: 350, y: 250, width: 100, height: 50, label: "No"};
+
+        // Function to draw buttons
+        function drawButtons() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.font = "20px Arial";
+
+            // Draw "Are you gay?" question
+            ctx.fillText("Are you gay?", 220, 100);
+
+            // Draw Yes Button
+            ctx.fillStyle = "lightgreen";
+            ctx.fillRect(yesButton.x, yesButton.y, yesButton.width, yesButton.height);
+            ctx.fillStyle = "black";
+            ctx.fillText(yesButton.label, yesButton.x + 30, yesButton.y + 30);
+
+            // Draw No Button
+            ctx.fillStyle = "lightcoral";
+            ctx.fillRect(noButton.x, noButton.y, noButton.width, noButton.height);
+            ctx.fillStyle = "black";
+            ctx.fillText(noButton.label, noButton.x + 30, noButton.y + 30);
+        }
+
+        // Function to handle mouse movement (hover effect)
+        canvas.addEventListener('mousemove', function(event) {
+            const mousePos = getMousePos(canvas, event);
+            
+            // Check if hovering over "No" button
+            if (isInside(mousePos, noButton)) {
+                // Move "No" button to random position
+                noButton.x = Math.random() * (canvas.width - noButton.width);
+                noButton.y = Math.random() * (canvas.height - noButton.height);
+                drawButtons();
+            }
+        });
+
+        // Function to handle mouse click on "Yes" button
+        canvas.addEventListener('click', function(event) {
+            const mousePos = getMousePos(canvas, event);
+            if (isInside(mousePos, yesButton)) {
+                alert('I knew it!');
+            }
+        });
+
+        // Utility function to get mouse position
+        function getMousePos(canvas, event) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: event.clientX - rect.left,
+                y: event.clientY - rect.top
+            };
+        }
+
+        // Utility function to check if mouse is inside a button
+        function isInside(pos, button) {
+            return pos.x > button.x && pos.x < button.x + button.width &&
+                   pos.y > button.y && pos.y < button.y + button.height;
+        }
+
+        // Initial drawing of buttons
+        drawButtons();
+    </script>
+</body>
+</html>
