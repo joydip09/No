@@ -37,10 +37,10 @@ noButton.addEventListener("touchstart", (e) => {
   moveNoButton();
 });
 
-// noButton.addEventListener("click", function () {
-//     overlay.classList.add("show");
-//     text.textContent = "COME ON, DON'T LIE! 😈";
-// });
+noButton.addEventListener("click", function () {
+    overlay.classList.add("show");
+    text.textContent = "COME ON, DON'T LIE! 😈";
+});
 
 const yesButton = document.getElementById("yes-btn");
 const overlay = document.getElementById("prank-overlay");
